@@ -4,7 +4,8 @@ import { LoginComponent } from './modules/auth/login/login.component';
 
 export const routes: Routes = [
     {path: 'signup', component: SignupComponent},
-    {path: 'login', component: LoginComponent}
-
+    {path: 'login', component: LoginComponent},
+    {path: 'user', loadChildren: ()=> import('./modules/user/service/user/user.module').then(m=> m.UserModule)},
+    {path: 'admin', loadChildren: ()=> import('./modules/admin/service/admin/admin.module').then(m=> m.AdminModule)}
 
 ];
