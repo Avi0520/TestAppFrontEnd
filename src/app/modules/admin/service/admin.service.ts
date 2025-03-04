@@ -13,6 +13,14 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   createTest(testDto: any): Observable<any>{
-    return this.http.post(BASIC_URL + 'api/tests',testDto);
+    return this.http.post(BASIC_URL + 'api/test',testDto);
+  }
+
+  getAllTest(): Observable<any> {
+    return this.http.get(BASIC_URL + `api/test`);
+  }
+
+  addQuestionInTest(questionDto: any): Observable<any> {
+    return this.http.post(BASIC_URL + `api/questions/add`, questionDto);
   }
 }
