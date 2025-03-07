@@ -1,1 +1,48 @@
-<p>add-question works!</p>
+<div class="add-question-container">
+  <h2>Add Question</h2>
+  <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Question Text -->
+    <label>Question Text:</label>
+    <input type="text" formControlName="questionText" required>
+
+    <!-- Question Type Dropdown -->
+    <label>Question Type:</label>
+    <select formControlName="questionType" (change)="onQuestionTypeChange()">
+      <option value="multiple_choice">Multiple Choice</option>
+      <option value="single_choice">Single Choice</option>
+      <option value="true_false">True / False</option>
+    </select>
+
+    <!-- Options for Multiple Choice and Single Choice -->
+    <div *ngIf="showOptions">
+      <label>Options:</label>
+      <div *ngFor="let option of options.controls; let i = index">
+        <input type="text" [formControlName]="i">
+        <button type="button" (click)="removeOption(i)">Remove</button>
+      </div>
+      <button type="button" (click)="addOption()">Add Option</button>
+    </div>
+
+    <!-- Correct Answer Selection -->
+    <div *ngIf="showOptions">
+      <label>Correct Answer:</label>
+      <div *ngFor="let option of options.controls; let i = index">
+        <input type="checkbox" (change)="updateCorrectAnswer(i, $event)" *ngIf="isMultipleChoice">
+        <input type="radio" name="correctAnswer" (change)="setCorrectAnswer(i)" *ngIf="isSingleChoice">
+        {{ option.value }}
+      </div>
+    </div>
+
+    <!-- Correct Answer for True/False -->
+    <div *ngIf="isTrueFalse">
+      <label>Correct Answer:</label>
+      <select formControlName="correctAnswer">
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="!questionForm.valid">Submit</button>
+  </form>
+</div>

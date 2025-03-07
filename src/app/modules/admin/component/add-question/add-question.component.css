@@ -1,28 +1,35 @@
-.container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
-  .option-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  input, nz-select {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    margin-top: 10px;
-  }
-  
+.add-question-container {
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+  background: #f4f4f4;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #0056b3;
+}
