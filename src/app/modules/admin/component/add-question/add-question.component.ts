@@ -1,135 +1,144 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../../service/admin.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { SharedModule } from '../../../shared/shared/shared.module';
 
 @Component({
   selector: 'app-add-question',
   standalone: true,
-  imports: [SharedModule],
+    imports: [SharedModule],
   templateUrl: './add-question.component.html',
   styleUrls: ['./add-question.component.css']
 })
 export class AddQuestionComponent implements OnInit {
   questionForm!: FormGroup;
-  options!: FormArray;
   testId!: number;
+
+  // Question types
+  questionTypes = [
+    { value: 'MULTIPLE_CHOICE', label: 'Multiple Choice' },
+    { value: 'SINGLE_CHOICE', label: 'Single Choice' },
+    { value: 'TRUE_FALSE', label: 'True/False' }
+  ];
 
   constructor(
     private fb: FormBuilder,
     private adminService: AdminService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notification: NzNotificationService
   ) {}
 
-  ngOnInit() {
-    this.testId = Number(this.route.snapshot.paramMap.get('id'));
+  ngOnInit(): void {
+    this.testId = +this.route.snapshot.paramMap.get('id')!;
+    this.initializeForm();
+  }
 
+  // Initialize the form
+  initializeForm(): void {
     this.questionForm = this.fb.group({
-      questionText: [''],
-      questionType: ['multiple_choice'],
-      options: this.fb.array([]),
-      correctAnswer: ['']  // Corrected (was [[]])
+      questionText: ['', Validators.required],
+      questionType: ['MULTIPLE_CHOICE', Validators.required],
+      options: this.fb.array([]), // Array of strings
+      correctAnswer: this.fb.array([])
     });
-
-    this.options = this.questionForm.get('options') as FormArray;
+  
+    // Add default options for multiple-choice
     this.addOption();
     this.addOption();
   }
-
-  // Getters for form conditions
-  get showOptions() {
-    return this.questionForm.value.questionType !== 'true_false';
+  // Getter for options FormArray
+  get options(): FormArray {
+    return this.questionForm.get('options') as FormArray;
   }
 
-  get isMultipleChoice() {
-    return this.questionForm.value.questionType === 'multiple_choice';
+  // Getter for correctAnswer FormArray
+  get correctAnswer(): FormArray {
+    return this.questionForm.get('correctAnswer') as FormArray;
   }
 
-  get isSingleChoice() {
-    return this.questionForm.value.questionType === 'single_choice';
-  }
-
-  get isTrueFalse() {
-    return this.questionForm.value.questionType === 'true_false';
-  }
-
-  onQuestionTypeChange() {
-    this.options.clear(); // Clear existing options
-    this.questionForm.patchValue({ correctAnswer: '' });
-  
-    if (this.isTrueFalse) {
-      // Add 'True' and 'False' as fixed options in the FormArray
-      this.options.push(this.fb.control('True'));
-      this.options.push(this.fb.control('False'));
-  
-      // Ensure a default correct answer is selected
-      this.questionForm.patchValue({ correctAnswer: 'True' });
-    } else {
-      this.addOption();
-      this.addOption();
-    }
+  // Add a new option
+  addOption(): void {
+    this.options.push(this.fb.control('', Validators.required));
   }
   
-
-  addOption() {
-    this.options.push(this.fb.control(''));
-  }
-
-  removeOption(index: number) {
+  removeOption(index: number): void {
     this.options.removeAt(index);
   }
 
-  setCorrectAnswer(index: number) {
-    const selectedOption = this.options.at(index).value;
-    this.questionForm.patchValue({ correctAnswer: [selectedOption] }); // Always store as an array
-  }
-  
+  // Handle question type change
+  onQuestionTypeChange(): void {
+    const questionType = this.questionForm.get('questionType')?.value;
 
-  updateCorrectAnswer(index: number, event: any) {
-    let currentAnswers = this.questionForm.value.correctAnswer || [];
+    // Clear existing options and correct answers
+    this.options.clear();
+    this.correctAnswer.clear();
 
-    if (event.target.checked) {
-      currentAnswers.push(this.options.at(index).value);
+    if (questionType === 'TRUE_FALSE') {
+      // Add True and False options
+      this.options.push(this.fb.control('True', Validators.required));
+      this.options.push(this.fb.control('False', Validators.required));
     } else {
-      currentAnswers = currentAnswers.filter((ans: any) => ans !== this.options.at(index).value);
+      // Add default options for multiple/single choice
+      this.addOption();
+      this.addOption();
     }
-
-    this.questionForm.patchValue({ correctAnswer: currentAnswers });
   }
 
-  onSubmit() {
-    if (this.questionForm.valid && this.testId > 0) {
-      const options = this.isTrueFalse
-        ? [{ optionText: 'True' }, { optionText: 'False' }]
-        : this.questionForm.value.options.map((opt: string) => ({ optionText: opt }));
-  
-      // Ensure correctAnswer is always an array (even for single-choice questions)
-      const correctAnswer = Array.isArray(this.questionForm.value.correctAnswer)
-        ? this.questionForm.value.correctAnswer
-        : this.questionForm.value.correctAnswer
-        ? [this.questionForm.value.correctAnswer]  // Convert single value to array
-        : [];  // If empty, set as an empty array
-  
-      const questionDto = {
-        questionText: this.questionForm.value.questionText,
-        questionType: this.questionForm.value.questionType,
-        options: options,
-        correctAnswer: correctAnswer,  // Ensures correct format
-        test: { id: this.testId }
-      };
-  
-      console.log(questionDto); // Debugging output
-  
-      this.adminService.addQuestion(questionDto).subscribe(response => {
-        alert('Question added successfully!');
-      }, error => {
-        console.error(error);
-        alert('There was an error adding the question.');
-      });
+  onCorrectAnswerChange(event: any, index: number): void {
+    const questionType = this.questionForm.get('questionType')?.value;
+    const selectedValue = this.options.at(index).value;
+
+    if (questionType === 'MULTIPLE_CHOICE') {
+      const correctAnswers = this.correctAnswer.value;
+      if (event.target.checked) {
+        this.correctAnswer.push(this.fb.control(selectedValue));
+      } else {
+        const indexToRemove = correctAnswers.indexOf(selectedValue);
+        if (indexToRemove !== -1) {
+          this.correctAnswer.removeAt(indexToRemove);
+        }
+      }
     } else {
-      alert('Please fill in all required fields.');
+      // For single choice and true/false
+      this.correctAnswer.clear();
+      this.correctAnswer.push(this.fb.control(selectedValue));
     }
   }
   
+
+  // Submit the form
+  onSubmit(): void {
+    if (this.questionForm.invalid) {
+      this.notification.error('Error', 'Please fill all required fields.');
+      return;
+    }
+  
+    // Map options to OptionDto objects
+    const options = this.questionForm.value.options.map((optionText: string) => ({
+      optionText: optionText
+    }));
+  
+    const questionDto = {
+      questionText: this.questionForm.value.questionText,
+      questionType: this.questionForm.value.questionType,
+      options: options, // Send as array of OptionDto objects
+      correctAnswer: this.questionForm.value.correctAnswer,
+      test: { id: this.testId }
+    };
+  
+    console.log('Payload:', questionDto); // Verify the payload
+  
+    this.adminService.addQuestion(questionDto).subscribe(
+      (response) => {
+        this.notification.success('Success', 'Question added successfully!');
+        this.questionForm.reset();
+        this.initializeForm(); // Reset the form
+      },
+      (error) => {
+        this.notification.error('Error', 'Failed to add question.');
+      }
+    );
+  }
 }

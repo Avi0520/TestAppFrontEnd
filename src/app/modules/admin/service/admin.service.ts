@@ -21,6 +21,8 @@ export class AdminService {
   }
 
   addQuestion(questionDto: any): Observable<any> {
-    return this.http.post(BASIC_URL + 'api/questions/add', questionDto,{ responseType: 'text' });
+    return this.http.post(BASIC_URL + 'api/questions/add', questionDto, { responseType: 'text' });
   }
+
+
 }

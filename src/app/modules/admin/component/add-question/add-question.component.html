@@ -1,48 +1,69 @@
-<div class="add-question-container">
-  <h2>Add Question</h2>
-  <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
-    
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
     <!-- Question Text -->
-    <label>Question Text:</label>
-    <input type="text" formControlName="questionText" required>
-
-    <!-- Question Type Dropdown -->
-    <label>Question Type:</label>
-    <select formControlName="questionType" (change)="onQuestionTypeChange()">
-      <option value="multiple_choice">Multiple Choice</option>
-      <option value="single_choice">Single Choice</option>
-      <option value="true_false">True / False</option>
-    </select>
-
-    <!-- Options for Multiple Choice and Single Choice -->
-    <div *ngIf="showOptions">
-      <label>Options:</label>
-      <div *ngFor="let option of options.controls; let i = index">
-        <input type="text" [formControlName]="i">
-        <button type="button" (click)="removeOption(i)">Remove</button>
-      </div>
-      <button type="button" (click)="addOption()">Add Option</button>
+    <div>
+      <label for="questionText">Question Text:</label>
+      <input id="questionText" formControlName="questionText" placeholder="Enter question text" />
     </div>
-
-    <!-- Correct Answer Selection -->
-    <div *ngIf="showOptions">
-      <label>Correct Answer:</label>
-      <div *ngFor="let option of options.controls; let i = index">
-        <input type="checkbox" (change)="updateCorrectAnswer(i, $event)" *ngIf="isMultipleChoice">
-        <input type="radio" name="correctAnswer" (change)="setCorrectAnswer(i)" *ngIf="isSingleChoice">
-        {{ option.value }}
-      </div>
-    </div>
-
-    <!-- Correct Answer for True/False -->
-    <div *ngIf="isTrueFalse">
-      <label>Correct Answer:</label>
-      <select formControlName="correctAnswer">
-        <option value="true">True</option>
-        <option value="false">False</option>
+  
+    <!-- Question Type -->
+    <div>
+      <label for="questionType">Question Type:</label>
+      <select id="questionType" formControlName="questionType" (change)="onQuestionTypeChange()">
+        <option *ngFor="let type of questionTypes" [value]="type.value">{{ type.label }}</option>
       </select>
     </div>
-
-    <button type="submit" [disabled]="!questionForm.valid">Submit</button>
+  
+    <!-- Options -->
+    <div formArrayName="options">
+      <div *ngFor="let option of options.controls; let i = index">
+        <label>Option {{ i + 1 }}:</label>
+        <input [formControlName]="i" placeholder="Enter option text" />
+        <button type="button" (click)="removeOption(i)" *ngIf="questionForm.get('questionType')?.value !== 'TRUE_FALSE'">
+          Remove
+        </button>
+      </div>
+      <button type="button" (click)="addOption()" *ngIf="questionForm.get('questionType')?.value !== 'TRUE_FALSE'">
+        Add Option
+      </button>
+    </div>
+  
+    <!-- Correct Answer -->
+    <div>
+      <label>Correct Answer:</label>
+      <div *ngIf="questionForm.get('questionType')?.value === 'MULTIPLE_CHOICE'">
+        <div *ngFor="let option of options.controls; let i = index">
+          <input
+            type="checkbox"
+            [value]="option.value"
+            (change)="onCorrectAnswerChange($event, i)"
+          />
+          {{ option.value }}
+        </div>
+      </div>
+      <div *ngIf="questionForm.get('questionType')?.value === 'SINGLE_CHOICE'">
+        <div *ngFor="let option of options.controls; let i = index">
+          <input
+            type="radio"
+            name="correctAnswer"
+            [value]="option.value"
+            (change)="onCorrectAnswerChange($event, i)"
+          />
+          {{ option.value }}
+        </div>
+      </div>
+      <div *ngIf="questionForm.get('questionType')?.value === 'TRUE_FALSE'">
+        <div *ngFor="let option of options.controls; let i = index">
+          <input
+            type="radio"
+            name="correctAnswer"
+            [value]="option.value"
+            (change)="onCorrectAnswerChange($event, i)"
+          />
+          {{ option.value }}
+        </div>
+      </div>
+    </div>
+  
+    <!-- Submit Button -->
+    <button type="submit">Add Question</button>
   </form>
-</div>
