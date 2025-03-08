@@ -24,5 +24,8 @@ export class AdminService {
     return this.http.post(BASIC_URL + 'api/questions/add', questionDto, { responseType: 'text' });
   }
 
+  getAllQuestion(id:number): Observable<any> {
+    return this.http.get(BASIC_URL + `api/test/${id}`);
+  }
 
 }
