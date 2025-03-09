@@ -1,0 +1,16 @@
+.question {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+h3 {
+    font-size: 16px;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin: 5px 0;
+}
