@@ -1,0 +1,14 @@
+<div *ngIf="testResult" class="test-result-container">
+  <h2>Test Results</h2>
+  <div class="result-details">
+    <p><strong>Test Name:</strong> {{ testResult.testName }}</p>
+    <p><strong>User Name:</strong> {{ testResult.userName }}</p>
+    <p><strong>Total Questions:</strong> {{ testResult.totalQuestion }}</p>
+    <p><strong>Correct Answers:</strong> {{ testResult.correctAnswer }}</p>
+    <p><strong>Percentage:</strong> {{ testResult.percentage }}%</p>
+  </div>
+</div>
+
+<div *ngIf="!testResult" class="loading-message">
+  <p>Loading test results...</p>
+</div>
