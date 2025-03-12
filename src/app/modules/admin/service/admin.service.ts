@@ -28,4 +28,7 @@ export class AdminService {
     return this.http.get(BASIC_URL + `api/test/${id}`);
   }
 
+  getAllTestResults(): Observable<any> {
+    return this.http.get(BASIC_URL + `api/test/results`);
+  }
 }
