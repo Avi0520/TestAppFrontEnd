@@ -8,13 +8,15 @@ import { SharedModule } from '../../../shared/shared/shared.module';
 @Component({
   selector: 'app-add-question',
   standalone: true,
-    imports: [SharedModule],
+  imports: [SharedModule],
   templateUrl: './add-question.component.html',
   styleUrls: ['./add-question.component.css']
 })
 export class AddQuestionComponent implements OnInit {
   questionForm!: FormGroup;
   testId!: number;
+  selectedFile: File | null = null;
+  uploadMessage: string = '';
 
   // Question types
   questionTypes = [
@@ -43,11 +45,12 @@ export class AddQuestionComponent implements OnInit {
       options: this.fb.array([]), // Array of strings
       correctAnswer: this.fb.array([])
     });
-  
+
     // Add default options for multiple-choice
     this.addOption();
     this.addOption();
   }
+
   // Getter for options FormArray
   get options(): FormArray {
     return this.questionForm.get('options') as FormArray;
@@ -62,7 +65,8 @@ export class AddQuestionComponent implements OnInit {
   addOption(): void {
     this.options.push(this.fb.control('', Validators.required));
   }
-  
+
+  // Remove an option
   removeOption(index: number): void {
     this.options.removeAt(index);
   }
@@ -86,6 +90,7 @@ export class AddQuestionComponent implements OnInit {
     }
   }
 
+  // Handle correct answer change
   onCorrectAnswerChange(event: any, index: number): void {
     const questionType = this.questionForm.get('questionType')?.value;
     const selectedValue = this.options.at(index).value;
@@ -106,7 +111,6 @@ export class AddQuestionComponent implements OnInit {
       this.correctAnswer.push(this.fb.control(selectedValue));
     }
   }
-  
 
   // Submit the form
   onSubmit(): void {
@@ -114,12 +118,12 @@ export class AddQuestionComponent implements OnInit {
       this.notification.error('Error', 'Please fill all required fields.');
       return;
     }
-  
+
     // Map options to OptionDto objects
     const options = this.questionForm.value.options.map((optionText: string) => ({
       optionText: optionText
     }));
-  
+
     const questionDto = {
       questionText: this.questionForm.value.questionText,
       questionType: this.questionForm.value.questionType,
@@ -127,17 +131,56 @@ export class AddQuestionComponent implements OnInit {
       correctAnswer: this.questionForm.value.correctAnswer,
       test: { id: this.testId }
     };
-  
+
     console.log('Payload:', questionDto); // Verify the payload
-  
+
     this.adminService.addQuestion(questionDto).subscribe(
       (response) => {
         this.notification.success('Success', 'Question added successfully!');
         this.questionForm.reset();
+        this.correctAnswer.clear(); // Clear the correctAnswer FormArray
         this.initializeForm(); // Reset the form
       },
       (error) => {
         this.notification.error('Error', 'Failed to add question.');
+      }
+    );
+  }
+
+  // Handle file selection
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      if (this.selectedFile) { // Null check
+        this.uploadMessage = `File selected: ${this.selectedFile.name}`;
+      }
+    } else {
+      this.selectedFile = null;
+      this.uploadMessage = 'No file selected.';
+    }
+  }
+
+  // Upload the file
+  uploadFile(): void {
+    if (!this.selectedFile) {
+      this.uploadMessage = 'Please select a file.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+
+    this.adminService.uploadQuestions(formData).subscribe(
+      (response: string) => {
+        this.uploadMessage = response;
+        this.notification.success('Success', response);
+      },
+      (error) => {
+        this.uploadMessage = 'Failed to upload questions.';
+        const errorMessage = error.error?.message || error.message || 'Failed to upload questions.';
+        this.notification.error('Error', errorMessage);
+        console.error('Error details:', error);
       }
     );
   }

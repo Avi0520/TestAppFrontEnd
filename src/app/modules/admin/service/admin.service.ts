@@ -10,6 +10,7 @@ const BASIC_URL ="http://localhost:8080/";
 })
 export class AdminService {
 
+
   constructor(private http: HttpClient) { }
 
   createTest(testDto: any): Observable<any>{
@@ -31,4 +32,9 @@ export class AdminService {
   getAllTestResults(): Observable<any> {
     return this.http.get(BASIC_URL + `api/test/results`);
   }
+
+  uploadQuestions(formData: FormData): Observable<any> {
+    return this.http.post(BASIC_URL + 'api/questions/upload', formData, { responseType: 'text' });
+  }
+  
 }
