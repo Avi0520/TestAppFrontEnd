@@ -1,4 +1,4 @@
-<div *ngIf="testDetails">
+<div *ngIf="testDetails; else loading">
   <!-- Test Details -->
   <div class="test-details">
     <h2>{{ testDetails.testDto.title }}</h2>
@@ -8,7 +8,7 @@
 
   <!-- Questions -->
   <div *ngFor="let question of testDetails.questions; let i = index" class="question">
-    <h3>Question {{ i + 1 }}: {{ question.questionText }}</h3> <!-- Display question number -->
+    <h3>Question {{ i + 1 }}: {{ question.questionText }}</h3>
     <p><strong>Type:</strong> {{ question.questionType }}</p>
 
     <!-- Options for Multiple Choice -->
@@ -54,6 +54,6 @@
   <button (click)="submitTest()">Submit Test</button>
 </div>
 
-<div *ngIf="!testDetails">
+<ng-template #loading>
   <p>Loading test details...</p>
-</div>
+</ng-template>

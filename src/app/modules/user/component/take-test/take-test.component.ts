@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../service/user.service';
 import { SharedModule } from '../../../shared/shared/shared.module';
+import { UserStorageService } from '../../../auth/service/user-stoarage.service';
 
 @Component({
   selector: 'app-take-test',
@@ -93,9 +94,15 @@ export class TakeTestComponent implements OnInit, OnDestroy {
 
   // Submit the test
   submitTest() {
+    const userId = UserStorageService.getUserId(); // Get the user ID from UserStorageService
+    if (!userId) {
+      console.error('User ID is missing. Please log in again.');
+      return;
+    }
+
     const submitData = {
       testId: this.testID,
-      userId: this.getUserId(),
+      userId: userId, // Use the actual user ID
       responses: Object.values(this.userAnswers),
     };
 
@@ -108,12 +115,6 @@ export class TakeTestComponent implements OnInit, OnDestroy {
         console.error('Error submitting test:', error);
       }
     );
-  }
-
-  // Get user ID (replace with actual logic)
-  getUserId(): number {
-    // Replace with actual logic to get the user ID
-    return 1;
   }
 
   // Format time for display (e.g., "5m 30s")
