@@ -1,0 +1,21 @@
+<div class="container">
+    <h2>My Test Results</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Test Name</th>
+          <th>Total Questions</th>
+          <th>Correct Answers</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of testResults">
+          <td>{{ result.testName }}</td>
+          <td>{{ result.totalQuestion }}</td>
+          <td>{{ result.correctAnswer }}</td>
+          <td>{{ result.percentage }}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
