@@ -7,8 +7,8 @@
   </div>
 
   <!-- Questions -->
-  <div *ngFor="let question of paginatedQuestions; let i = index" class="question">
-    <h3>Question {{ getQuestionNumber(i) }}: {{ question.questionText }}</h3>
+  <div *ngFor="let question of testDetails.questions; let i = index" class="question">
+    <h3>Question {{ i + 1 }}: {{ question.questionText }}</h3>
     <p><strong>Type:</strong> {{ question.questionType }}</p>
 
     <!-- Options for Multiple Choice -->
@@ -48,16 +48,6 @@
         <label [for]="'option-' + i + '-' + j">{{ option.optionText }}</label>
       </div>
     </div>
-  </div>
-
-  <!-- Pagination -->
-  <div class="pagination">
-    <nz-pagination
-      [nzPageIndex]="currentPage"
-      [nzTotal]="testDetails.questions.length"
-      [nzPageSize]="pageSize"
-      (nzPageIndexChange)="onPageChange($event)"
-    ></nz-pagination>
   </div>
 
   <!-- Submit Button -->

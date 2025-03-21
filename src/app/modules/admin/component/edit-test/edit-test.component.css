@@ -1,0 +1,86 @@
+/* Main container for the edit test form */
+.edit-test-container {
+    padding: 50px;
+    width: 60%;
+    margin: auto;
+    background-color: white;
+    box-shadow: 1px 1px 15px -7px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* Form control styling */
+nz-form-control {
+    min-width: 280px;
+}
+
+/* Parent container for the form */
+.parent {
+    margin-top: 40px;
+}
+
+/* Submit button styling */
+.login-form-button {
+    width: 30%;
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Button styling */
+button {
+    background-color: #001529;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Divider styling */
+nz-divider {
+    padding-bottom: 10px;
+}
+
+/* Preview section styling */
+.preview {
+    align-items: center;
+    justify-content: center;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Label styling */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Input and textarea styling */
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}

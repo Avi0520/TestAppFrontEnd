@@ -54,6 +54,16 @@
     <div class="correct-answer">
       <p><strong>Correct Answer:</strong> {{ question.correctAnswer.join(', ') }}</p>
     </div>
+
+    <!-- Edit Button -->
+    <div class="edit-button">
+      <button
+      [routerLink]="['/admin/edit-question', testDetails.testDto.id, question.id]"
+      class="btn btn-primary"
+    >
+      Edit Question
+    </button>
+    </div>
   </div>
 
   <!-- Pagination -->
