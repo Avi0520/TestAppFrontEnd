@@ -1,27 +1,57 @@
+/* Reuse the search bar styles from dashboard CSS */
+.search-bar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 400px; /* Limit the width of the search bar */
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-bar input:focus {
+  border-color: #40a9ff; /* Highlight border on focus */
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2); /* Add a subtle glow */
+}
+
+/* Existing styles for the container, table, etc. */
 .container {
-    margin: 20px;
-  }
-  
-  h2 {
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #f4f4f4;
-  }
-  
-  tr:hover {
-    background-color: #f9f9f9;
-  }
+  margin: 20px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}

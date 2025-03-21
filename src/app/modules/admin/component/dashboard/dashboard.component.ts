@@ -16,7 +16,10 @@ export class DashboardComponent {
 
   tests: any[] = [];
   filteredTests: any[] = [];
+  paginatedTests: any[] = [];
   searchTerm: string = '';
+  currentPage: number = 1;
+  pageSize: number = 5; // Number of items per page
 
   constructor(private notification: NzNotificationService,
     private testService: AdminService 
@@ -30,6 +33,7 @@ export class DashboardComponent {
     this.testService.getAllTest().subscribe(res=>{
       this.tests = res;
       this.filteredTests = res; // Initialize filteredTests with all tests
+      this.updatePaginatedTests();
     },error=>{
       this.notification
       .error(
@@ -55,5 +59,18 @@ export class DashboardComponent {
         test.description.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    this.currentPage = 1; // Reset to first page after filtering
+    this.updatePaginatedTests();
+  }
+
+  onPageChange(pageIndex: number) {
+    this.currentPage = pageIndex;
+    this.updatePaginatedTests();
+  }
+
+  updatePaginatedTests() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedTests = this.filteredTests.slice(startIndex, endIndex);
   }
 }

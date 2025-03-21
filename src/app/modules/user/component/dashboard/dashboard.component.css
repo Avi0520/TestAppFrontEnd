@@ -58,3 +58,9 @@
     gap: 10px; /* Adds spacing between buttons */
     margin-top: 10px; /* Adjust spacing from content */
 }
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}

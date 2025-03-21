@@ -3,22 +3,20 @@ form {
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
 }
 
 /* Form group styling */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   font-weight: bold;
-  color: #333;
 }
 
 .form-group input,
@@ -32,8 +30,6 @@ form {
 
 /* Option group styling */
 .option-group {
-  display: flex;
-  align-items: center;
   margin-bottom: 10px;
 }
 
@@ -46,9 +42,8 @@ form {
 }
 
 .option-group button {
-  margin-left: 10px;
   padding: 5px 10px;
-  background-color: #dc3545;
+  background-color: #ff4d4d;
   color: white;
   border: none;
   border-radius: 4px;
@@ -56,14 +51,14 @@ form {
 }
 
 .option-group button:hover {
-  background-color: #c82333;
+  background-color: #cc0000;
 }
 
 /* Submit button styling */
 .submit-button {
   width: 100%;
   padding: 10px;
-  background-color: #28a745;
+  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -72,7 +67,7 @@ form {
 }
 
 .submit-button:hover {
-  background-color: #218838;
+  background-color: #45a049;
 }
 
 /* Upload section styling */
@@ -80,24 +75,26 @@ form {
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
 }
 
 .upload-section h2 {
+  margin-bottom: 10px;
+}
+
+.upload-section p {
   margin-bottom: 15px;
-  color: #333;
 }
 
 .upload-section input[type="file"] {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .upload-section .upload-button {
   padding: 8px 12px;
-  background-color: #007bff;
+  background-color: #008CBA;
   color: white;
   border: none;
   border-radius: 4px;
@@ -105,11 +102,22 @@ form {
 }
 
 .upload-section .upload-button:hover {
-  background-color: #0056b3;
+  background-color: #007B9E;
 }
 
 .upload-section .upload-message {
   margin-top: 10px;
-  color: #28a745;
+  color: #4CAF50;
   font-weight: bold;
+}
+
+/* Download link styling */
+.download-link {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.download-link:hover {
+  text-decoration: underline;
 }

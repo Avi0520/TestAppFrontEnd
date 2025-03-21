@@ -18,6 +18,9 @@ export class TakeTestComponent implements OnInit, OnDestroy {
   userAnswers: any = {}; // Stores user's answers
   remainingTime: number = 0; // Tracks remaining time in seconds
   timer: any; // Reference to the timer
+  currentPage: number = 1; // Current page for pagination
+  pageSize: number = 8; // Number of questions per page
+  paginatedQuestions: any[] = []; // Holds the questions for the current page
 
   constructor(
     private userService: UserService,
@@ -39,6 +42,7 @@ export class TakeTestComponent implements OnInit, OnDestroy {
               this.testDetails = res;
               this.initializeUserAnswers();
               this.startTimer(res.testDto.time); // Start the timer with the test time
+              this.updatePaginatedQuestions(); // Initialize paginated questions
             }
           },
           (error) => {
@@ -130,6 +134,24 @@ export class TakeTestComponent implements OnInit, OnDestroy {
   // Get formatted remaining time for display
   getFormattedTime(): string {
     return this.formatTime(this.remainingTime);
+  }
+
+  // Handle page change event
+  onPageChange(pageIndex: number) {
+    this.currentPage = pageIndex;
+    this.updatePaginatedQuestions();
+  }
+
+  // Update the paginated questions based on the current page
+  updatePaginatedQuestions() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedQuestions = this.testDetails.questions.slice(startIndex, endIndex);
+  }
+
+  // Calculate the question number based on the current page
+  getQuestionNumber(index: number): number {
+    return (this.currentPage - 1) * this.pageSize + index + 1;
   }
 
   // Clean up the timer when the component is destroyed

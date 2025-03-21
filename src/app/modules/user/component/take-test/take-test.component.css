@@ -34,3 +34,9 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}

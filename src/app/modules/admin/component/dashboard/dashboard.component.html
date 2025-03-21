@@ -6,7 +6,7 @@
     </div>
     <div nz-row>
         <div nz-col nzSpan="24" style="margin-bottom: 20px;">
-            <span style="margin: 20px;" *ngFor="let test of filteredTests">
+            <span style="margin: 20px;" *ngFor="let test of paginatedTests">
                 <nz-card [nzBordered]="true" class="test" nzTitle="{{test.title}}">
                     <p><strong>Time :</strong> {{getFormatedTime(test.time)}}</p>
                     <p><strong>Description :</strong> {{ test.description }}</p>
@@ -17,6 +17,16 @@
                     </div>
                 </nz-card>
             </span>
+        </div>
+    </div>
+    <div nz-row>
+        <div nz-col nzSpan="24" class="pagination">
+            <nz-pagination 
+                [nzPageIndex]="currentPage" 
+                [nzTotal]="filteredTests.length" 
+                [nzPageSize]="pageSize" 
+                (nzPageIndexChange)="onPageChange($event)">
+            </nz-pagination>
         </div>
     </div>
 </div>
