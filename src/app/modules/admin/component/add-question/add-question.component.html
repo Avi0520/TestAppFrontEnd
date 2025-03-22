@@ -22,7 +22,7 @@
         Remove
       </button>
     </div>
-    <button type="button" (click)="addOption()" *ngIf="questionForm.get('questionType')?.value !== 'TRUE_FALSE'">
+    <button type="button" (click)="addOption()" class="add-option-button" *ngIf="questionForm.get('questionType')?.value !== 'TRUE_FALSE'">
       Add Option
     </button>
   </div>
