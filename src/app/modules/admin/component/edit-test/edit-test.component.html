@@ -1,0 +1,38 @@
+<div class="edit-test-container">
+    <form [formGroup]="testForm" (ngSubmit)="onSubmit()">
+      <!-- Title Field -->
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" formControlName="title" placeholder="Enter test title" />
+        <!-- Validation Error Message -->
+        <div *ngIf="testForm.get('title')?.invalid && testForm.get('title')?.touched" class="error-message">
+          Title is required.
+        </div>
+      </div>
+  
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" placeholder="Enter test description"></textarea>
+        <!-- Validation Error Message -->
+        <div *ngIf="testForm.get('description')?.invalid && testForm.get('description')?.touched" class="error-message">
+          Description is required.
+        </div>
+      </div>
+  
+      <!-- Time Field -->
+      <div class="form-group">
+        <label for="time">Time (in seconds)</label>
+        <input id="time" type="number" formControlName="time" placeholder="Enter test time" />
+        <!-- Validation Error Message -->
+        <div *ngIf="testForm.get('time')?.invalid && testForm.get('time')?.touched" class="error-message">
+          Time is required and must be greater than 0.
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button type="submit" class="login-form-button" [disabled]="testForm.invalid">Update Test</button>
+      </div>
+    </form>
+  </div>

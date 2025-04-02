@@ -1,0 +1,85 @@
+<div class="edit-question-container">
+    <h2>Edit Question</h2>
+    <form [formGroup]="editQuestionForm" (ngSubmit)="onSubmit()">
+      <!-- Question Text -->
+      <div class="form-group">
+        <label for="questionText">Question Text</label>
+        <textarea
+          id="questionText"
+          formControlName="questionText"
+          class="form-control"
+          placeholder="Enter the question text"
+        ></textarea>
+        <div *ngIf="editQuestionForm.get('questionText')?.invalid && editQuestionForm.get('questionText')?.touched" class="error-message">
+          Question text is required.
+        </div>
+      </div>
+  
+      <!-- Question Type -->
+      <div class="form-group">
+        <label for="questionType">Question Type</label>
+        <select
+          id="questionType"
+          formControlName="questionType"
+          class="form-control"
+        >
+          <option value="" disabled>Select question type</option>
+          <option *ngFor="let type of questionTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="editQuestionForm.get('questionType')?.invalid && editQuestionForm.get('questionType')?.touched" class="error-message">
+          Question type is required.
+        </div>
+      </div>
+  
+      <!-- Options -->
+      <div class="form-group">
+        <label>Options</label>
+        <div formArrayName="options">
+          <div
+            *ngFor="let option of options.controls; let i = index"
+            class="option-group"
+          >
+            <input
+              [formControlName]="i"
+              class="form-control"
+              placeholder="Enter option text"
+            />
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="removeOption(i)"
+            >
+              Remove
+            </button>
+            <div *ngIf="options.controls[i].invalid && options.controls[i].touched" class="error-message">
+              Option text is required.
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="addOption()"
+        >
+          Add Option
+        </button>
+      </div>
+  
+      <!-- Correct Answer -->
+      <div class="form-group">
+        <label for="correctAnswer">Correct Answer</label>
+        <input
+          id="correctAnswer"
+          formControlName="correctAnswer"
+          class="form-control"
+          placeholder="Enter correct answer(s), separated by commas"
+        />
+        <div *ngIf="editQuestionForm.get('correctAnswer')?.invalid && editQuestionForm.get('correctAnswer')?.touched" class="error-message">
+          Correct answer is required.
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary" [disabled]="editQuestionForm.invalid">Update Question</button>
+    </form>
+  </div>

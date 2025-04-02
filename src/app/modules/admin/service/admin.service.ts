@@ -36,5 +36,21 @@ export class AdminService {
   uploadQuestions(formData: FormData): Observable<any> {
     return this.http.post(BASIC_URL + 'api/questions/upload', formData, { responseType: 'text' });
   }
+
+  updateTest(id: number, testDto: any): Observable<any> {
+    return this.http.put(`${BASIC_URL}api/test/${id}`, testDto);
+}
   
+  getTestById(id: number): Observable<any> {
+    return this.http.get(`${BASIC_URL}api/test/details/${id}`); // Use the new endpoint
+  }
+
+  getQuestionById(id: number): Observable<any> {
+    return this.http.get<any>(`${BASIC_URL}api/questions/${id}`);
+  }
+
+  // Update a question
+  updateQuestion(id: number, question: any): Observable<any> {
+    return this.http.put(`${BASIC_URL}api/questions/update/${id}`, question);
+  }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserStorageService } from '../../auth/service/user-stoarage.service';
 
 
 const BASIC_URL ="http://localhost:8080/";
@@ -26,5 +27,10 @@ export class UserService {
 
     getTestResult(resultId: string): Observable<any> {
       return this.http.get(BASIC_URL + `api/test/results/${resultId}`);
+    }
+
+    getTestResultbyUser(): Observable<any> {
+      const userId = UserStorageService.getUserId(); // Call the function
+      return this.http.get(BASIC_URL + `api/test/user/${userId}`);
     }
 }
