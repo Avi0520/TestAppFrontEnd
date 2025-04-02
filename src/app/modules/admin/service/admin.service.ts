@@ -13,9 +13,10 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  createTest(testDto: any): Observable<any>{
-    return this.http.post(BASIC_URL + 'api/test',testDto);
-  }
+// Correct (using backticks)
+createTest(testDto: any, courseId: number): Observable<any> {
+  return this.http.post(`${BASIC_URL}api/test/course/${courseId}`, testDto);
+}
 
   getAllTest(): Observable<any> {
     return this.http.get(BASIC_URL + `api/test`);

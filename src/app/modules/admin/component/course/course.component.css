@@ -1,0 +1,33 @@
+/* course.component.css */
+.container {
+    padding: 0 24px;
+  }
+  
+  nz-card {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  nz-table {
+    border-radius: 8px;
+  }
+  
+  .text-gray-600 {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .gap-2 {
+    gap: 8px;
+  }
+  
+  .gap-4 {
+    gap: 16px;
+  }
+  
+  .mb-6 {
+    margin-bottom: 24px;
+  }
