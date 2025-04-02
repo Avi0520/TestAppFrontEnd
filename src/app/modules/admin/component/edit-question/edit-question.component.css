@@ -1,0 +1,131 @@
+/* General form styling */
+.edit-question-container form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+/* Form group styling */
+.edit-question-container .form-group {
+  margin-bottom: 15px;
+}
+
+.edit-question-container .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.edit-question-container .form-group input,
+.edit-question-container .form-group select,
+.edit-question-container .form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.edit-question-container .form-group textarea {
+  resize: vertical; /* Allow vertical resizing of textarea */
+}
+
+/* Error message styling */
+.edit-question-container .error-message {
+  color: #ff4d4d;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Options section styling */
+.edit-question-container .option-group {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.edit-question-container .option-group input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.edit-question-container .option-group button {
+  padding: 5px 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-question-container .option-group button:hover {
+  background-color: #cc0000;
+}
+
+/* Add Option button styling */
+.edit-question-container .btn-secondary {
+  padding: 5px 10px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-question-container .btn-secondary:hover {
+  background-color: #007B9E;
+}
+
+/* Submit button styling */
+.edit-question-container .btn-primary {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.edit-question-container .btn-primary:hover {
+  background-color: #45a049;
+}
+
+.edit-question-container .btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Correct Answer section styling */
+.edit-question-container .correct-answer-section {
+  margin-bottom: 15px;
+}
+
+.edit-question-container .correct-answer-section label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.edit-question-container .correct-answer-section input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Loading message styling */
+.edit-question-container .loading-message {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}

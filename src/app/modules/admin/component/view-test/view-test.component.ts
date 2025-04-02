@@ -14,6 +14,9 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
 export class ViewTestComponent {
   testDetails: any = null; // Holds the test details and questions
   testID: any; // Holds the test ID from the route
+  currentPage: number = 1; // Current page for pagination
+  pageSize: number = 5; // Number of questions per page
+  paginatedQuestions: any[] = []; // Holds the questions for the current page
 
   constructor(
     private adminService: AdminService,
@@ -33,6 +36,7 @@ export class ViewTestComponent {
             if (res) {
               this.testDetails = res; // Assign the response to testDetails
               this.initializeQuestions(); // Initialize selected options for questions
+              this.updatePaginatedQuestions(); // Update paginated questions
             }
           },
           (error) => {
@@ -59,5 +63,23 @@ export class ViewTestComponent {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}m ${remainingSeconds}s`;
+  }
+
+  // Handle page change event
+  onPageChange(pageIndex: number) {
+    this.currentPage = pageIndex;
+    this.updatePaginatedQuestions();
+  }
+
+  // Update the paginated questions based on the current page
+  updatePaginatedQuestions() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedQuestions = this.testDetails.questions.slice(startIndex, endIndex);
+  }
+
+  // Calculate the question number based on the current page
+  getQuestionNumber(index: number): number {
+    return (this.currentPage - 1) * this.pageSize + index + 1;
   }
 }

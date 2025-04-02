@@ -1,36 +1,46 @@
 <div class="search-container">
-    <input
-      type="text"
-      [(ngModel)]="searchQuery"
-      placeholder="Search by user name or test name"
-      (input)="filterResults()"
-    />
-  </div>
-  
-  <div class="results-container">
-    <h2>All Test Results</h2>
-    <table *ngIf="filteredResults.length > 0">
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    placeholder="Search by user name or test name"
+    (input)="filterResults()"
+  />
+</div>
+
+<div class="results-container">
+  <h2>All Test Results</h2>
+  <table *ngIf="filteredResults.length > 0">
       <thead>
-        <tr>
-          <th>Test Name</th>
-          <th>User Name</th>
-          <th>Total Questions</th>
-          <th>Correct Answers</th>
-          <th>Percentage</th>
-        </tr>
+          <tr>
+              <th>Test Name</th>
+              <th>User Name</th>
+              <th>Total Questions</th>
+              <th>Correct Answers</th>
+              <th>Percentage</th>
+          </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let result of filteredResults">
-          <td>{{ result.testName }}</td>
-          <td>{{ result.userName }}</td>
-          <td>{{ result.totalQuestion }}</td>
-          <td>{{ result.correctAnswer }}</td>
-          <td>{{ result.percentage }}%</td>
-        </tr>
+          <tr *ngFor="let result of filteredResults | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize">
+              <td>{{ result.testName }}</td>
+              <td>{{ result.userName }}</td>
+              <td>{{ result.totalQuestion }}</td>
+              <td>{{ result.correctAnswer }}</td>
+              <td>{{ result.percentage }}%</td>
+          </tr>
       </tbody>
-    </table>
-  
-    <div *ngIf="filteredResults.length === 0" class="no-results">
-      <p>No test results found.</p>
-    </div>
+  </table>
+
+  <!-- Pagination container -->
+  <div class="pagination-container" *ngIf="filteredResults.length > pageSize">
+    <nz-pagination
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      [nzTotal]="totalItems"
+      (nzPageIndexChange)="onPageChange($event)"
+    ></nz-pagination>
   </div>
+
+  <div *ngIf="filteredResults.length === 0" class="no-results">
+      <p>No test results found.</p>
+  </div>
+</div>

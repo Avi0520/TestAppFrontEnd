@@ -22,7 +22,7 @@
         Remove
       </button>
     </div>
-    <button type="button" (click)="addOption()" *ngIf="questionForm.get('questionType')?.value !== 'TRUE_FALSE'">
+    <button type="button" (click)="addOption()" class="add-option-button" *ngIf="questionForm.get('questionType')?.value !== 'TRUE_FALSE'">
       Add Option
     </button>
   </div>
@@ -71,6 +71,12 @@
 <!-- Excel Upload Section -->
 <div class="upload-section">
   <h2>Upload Questions via Excel</h2>
+  <p>
+    Download the Excel template to add questions:
+    <a href="/assets/question_template.xlsx" download="question_template.xlsx" class="download-link">
+      Download Template
+    </a>
+  </p>
   <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" />
   <button (click)="uploadFile()" class="upload-button">Upload</button>
   <p *ngIf="uploadMessage" class="upload-message">{{ uploadMessage }}</p>
