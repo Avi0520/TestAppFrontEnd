@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { UserStorageService } from './user-stoarage.service';
 
 
 const BASIC_URL = "http://localhost:8080/"; 
@@ -21,6 +22,11 @@ export class AuthService {
   }
 
   login(loginRequest: any): Observable<any> {
-    return this.http.post(BASIC_URL + "api/auth/login", loginRequest);
+    return this.http.post(BASIC_URL + "api/auth/login", loginRequest).pipe(
+      tap((response: any) => {
+        // Store user data including courses
+        UserStorageService.saveUser(response);
+      })
+    );
   }
 }
