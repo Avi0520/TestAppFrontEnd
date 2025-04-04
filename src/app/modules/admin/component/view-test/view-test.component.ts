@@ -3,6 +3,7 @@ import { SharedModule } from '../../../shared/shared/shared.module';
 import { AdminService } from '../../service/admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-view-test',
@@ -20,7 +21,9 @@ export class ViewTestComponent {
 
   constructor(
     private adminService: AdminService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private notification: NzNotificationService // Add this line
+
   ) {}
 
   ngOnInit() {
@@ -82,4 +85,34 @@ export class ViewTestComponent {
   getQuestionNumber(index: number): number {
     return (this.currentPage - 1) * this.pageSize + index + 1;
   }
+
+// In view-test.component.ts
+deleteQuestion(questionId: number) {
+  if (confirm('Are you sure you want to delete this question?')) {
+    this.adminService.deleteQuestion(questionId).subscribe({
+      next: (response) => {
+        console.log('Delete successful:', response);
+        this.testDetails.questions = this.testDetails.questions.filter(
+          (q: any) => q.id !== questionId
+        );
+        this.updatePaginatedQuestions();
+        
+        // Show success notification
+        this.notification.success(
+          'Success', 
+          'Question deleted successfully',
+          { nzDuration: 3000 }
+        );
+      },
+      error: (err) => {
+        console.error('Error details:', err);
+        this.notification.error(
+          'Error',
+          err.error?.message || 'Failed to delete question',
+          { nzDuration: 3000 }
+        );
+      }
+    });
+  }
+}
 }

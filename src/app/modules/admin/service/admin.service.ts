@@ -54,4 +54,12 @@ createTest(testDto: any, courseId: number): Observable<any> {
   updateQuestion(id: number, question: any): Observable<any> {
     return this.http.put(`${BASIC_URL}api/questions/update/${id}`, question);
   }
+
+  deleteTest(id: number): Observable<any> {
+    return this.http.delete(`${BASIC_URL}api/test/${id}`);
+  }
+
+  deleteQuestion(id: number): Observable<any> {
+    return this.http.delete(`${BASIC_URL}api/questions/delete/${id}`);
+  }
 }
