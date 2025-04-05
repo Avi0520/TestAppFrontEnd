@@ -1,33 +1,47 @@
 <div class="bg">
     <div class="parent">
         <div class="child">
-            <form nz-form [formGroup]="testForm" class="login-form"  (ngSubmit)="submitForm()">
-                <nz-form-label [nzNoColon]="'true'">Title</nz-form-label>
+            <form nz-form [formGroup]="testForm" class="login-form" (ngSubmit)="submitForm()">
                 <nz-form-item>
-                    <nz-form-control nzErrorTip="This input is required!">
-                        <input type="text" nz-input formControlName="title" placeholder="Title" />
+                    <nz-form-label [nzNoColon]="'true'">Course</nz-form-label>
+                    <nz-form-control nzErrorTip="Please select a course!">
+                        <nz-select nzShowSearch formControlName="courseId" nzPlaceHolder="Select Course">
+                            <nz-option *ngFor="let course of courses" [nzValue]="course.id" [nzLabel]="course.name"></nz-option>
+                        </nz-select>
                     </nz-form-control>
                 </nz-form-item>
 
-                <nz-form-label [nzNoColon]="'true'">Time Per Question</nz-form-label>
                 <nz-form-item>
-                    <nz-form-control nzErrorTip="This input is required!">
-                        <input type="number" nz-input formControlName="time" placeholder="Time Seconds Per Question" />
-                    </nz-form-control>
-                </nz-form-item>
- 
-                <nz-form-label [nzNoColon]="'true'">Description</nz-form-label>
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="This input is required!">
-                        <textarea rows="4" nz-input formControlName="description" placeholder="Description">
-                </textarea>
+                    <nz-form-label [nzNoColon]="'true'">Title</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input test title!">
+                        <input type="text" nz-input formControlName="title" placeholder="Test Title" />
                     </nz-form-control>
                 </nz-form-item>
 
-                <div style="padding-bottom: 30px;">
-                    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Submit</button>
+                <nz-form-item>
+                    <nz-form-label [nzNoColon]="'true'">Time Per Question (seconds)</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input time per question!">
+                        <input type="number" nz-input formControlName="time" placeholder="Time in seconds" />
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzNoColon]="'true'">Description</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input description!">
+                        <textarea rows="4" nz-input formControlName="description" placeholder="Test Description"></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <div style="padding-bottom: 30px; text-align: center;">
+                    <button 
+                        nz-button 
+                        class="login-form-button" 
+                        [nzType]="'primary'" 
+                        [nzLoading]="isLoading"
+                        [disabled]="isLoading">
+                        Submit
+                    </button>
                 </div>
-
             </form>
         </div>
     </div>

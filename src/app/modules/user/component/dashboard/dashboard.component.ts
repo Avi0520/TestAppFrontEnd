@@ -1,81 +1,90 @@
 import { Component } from '@angular/core';
 import { SharedModule } from '../../../shared/shared/shared.module';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { AdminService } from '../../../admin/service/admin.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UserStorageService } from '../../../auth/service/user-stoarage.service';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SharedModule, CommonModule, FormsModule], // Add FormsModule for ngModel
+  imports: [SharedModule, CommonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-
-  tests: any[] = []; // Original list of tests
-  filteredTests: any[] = []; // Filtered list of tests for display
-  paginatedTests: any[] = []; // Paginated list of tests for the current page
-  searchTerm: string = ''; // Search term
-  currentPage: number = 1; // Current page for pagination
-  pageSize: number = 6; // Number of tests per page
+  tests: any[] = [];
+  filteredTests: any[] = [];
+  paginatedTests: any[] = [];
+  searchTerm: string = '';
+  currentPage: number = 1;
+  pageSize: number = 6;
 
   constructor(
     private notification: NzNotificationService,
-    private testService: AdminService
+    private userService: UserService // Changed from AdminService to UserService
   ) { }
 
   ngOnInit() {
-    this.getAllTests();
+    this.loadUserTests();
   }
 
-  // Fetch all tests from the API
-  getAllTests() {
-    this.testService.getAllTest().subscribe(
-      (res) => {
-        this.tests = res;
-        this.filteredTests = res; // Initialize filteredTests with all tests
-        this.updatePaginatedTests(); // Update paginated tests
-      },
-      (error) => {
-        this.notification.error(
-          `ERROR`,
-          `Something went wrong! Try Again.`,
-          { nzDuration: 5000 }
-        );
-      }
+  loadUserTests() {
+    if (UserStorageService.isAdminLoggedIn()) {
+      // Admin sees all tests
+      this.userService.getAllTest().subscribe(
+        (res) => this.handleTestsResponse(res),
+        (error) => this.handleError(error)
+      );
+    } else {
+      // Regular user sees only tests from their courses
+      this.userService.getTestsByUser().subscribe(
+        (res) => this.handleTestsResponse(res),
+        (error) => this.handleError(error)
+      );
+    }
+  }
+
+  private handleTestsResponse(res: any) {
+    this.tests = res;
+    this.filteredTests = res;
+    this.updatePaginatedTests();
+  }
+
+  private handleError(error: any) {
+    this.notification.error(
+      `ERROR`,
+      `Something went wrong! Try Again.`,
+      { nzDuration: 5000 }
     );
   }
 
-  // Format time in minutes and seconds
+  // Rest of your existing methods...
   getFormatedTime(time: number): string {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     return ` ${minutes} minutes ${seconds} seconds `;
   }
 
-  // Filter tests based on the search term
   filterTests() {
     if (!this.searchTerm) {
-      this.filteredTests = this.tests; // If no search term, show all tests
+      this.filteredTests = this.tests;
     } else {
       this.filteredTests = this.tests.filter(test =>
         test.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         test.description.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
-    this.currentPage = 1; // Reset to the first page after filtering
-    this.updatePaginatedTests(); // Update paginated tests
+    this.currentPage = 1;
+    this.updatePaginatedTests();
   }
 
-  // Handle page change event
   onPageChange(pageIndex: number) {
     this.currentPage = pageIndex;
     this.updatePaginatedTests();
   }
 
-  // Update the paginated tests based on the current page
   updatePaginatedTests() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;

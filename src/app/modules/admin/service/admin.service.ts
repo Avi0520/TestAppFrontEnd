@@ -13,9 +13,10 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  createTest(testDto: any): Observable<any>{
-    return this.http.post(BASIC_URL + 'api/test',testDto);
-  }
+// Correct (using backticks)
+createTest(testDto: any, courseId: number): Observable<any> {
+  return this.http.post(`${BASIC_URL}api/test/course/${courseId}`, testDto);
+}
 
   getAllTest(): Observable<any> {
     return this.http.get(BASIC_URL + `api/test`);
@@ -52,5 +53,13 @@ export class AdminService {
   // Update a question
   updateQuestion(id: number, question: any): Observable<any> {
     return this.http.put(`${BASIC_URL}api/questions/update/${id}`, question);
+  }
+
+  deleteTest(id: number): Observable<any> {
+    return this.http.delete(`${BASIC_URL}api/test/${id}`);
+  }
+
+  deleteQuestion(id: number): Observable<any> {
+    return this.http.delete(`${BASIC_URL}api/questions/delete/${id}`);
   }
 }

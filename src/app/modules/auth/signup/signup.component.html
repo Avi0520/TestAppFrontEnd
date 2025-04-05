@@ -7,28 +7,70 @@
 
             <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
                 <nz-form-item>
-                    <nz-form-control nzHasFeedback nzErrorTip="The input is not valid E-mail!">
+                    <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTpl">
                         <input nz-input placeholder="E-mail" formControlName="email" />
+                        <ng-template #emailErrorTpl let-control>
+                            @if (control.errors?.['required']) {
+                                Please enter your email!
+                            }
+                            @if (control.errors?.['email']) {
+                                The input is not valid email!
+                            }
+                        </ng-template>
                     </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item>
-                    <nz-form-control nzHasFeedback nzErrorTip="The input is not valid Password!">
+                    <nz-form-control nzHasFeedback [nzErrorTip]="passwordErrorTpl">
                         <input nz-input placeholder="Password" type="password" formControlName="password" />
+                        <ng-template #passwordErrorTpl let-control>
+                            @if (control.errors?.['required']) {
+                                Please enter your password!
+                            }
+                        </ng-template>
                     </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item>
-                    <nz-form-control nzHasFeedback nzErrorTip="The input is not valid Name!">
-                      <input nz-input placeholder="Name" formControlName="name" />
+                    <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTpl">
+                        <input nz-input placeholder="Name" formControlName="name" />
+                        <ng-template #nameErrorTpl let-control>
+                            @if (control.errors?.['required']) {
+                                Please enter your name!
+                            }
+                        </ng-template>
                     </nz-form-control>
-                  </nz-form-item>
-                  
-                  <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Register</button>
-                  
-                  <p>Or <a routerLink="/login">login now!</a></p>
-                  
+                </nz-form-item>
 
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-select
+                            nzMode="multiple"
+                            nzPlaceHolder="Select courses"
+                            [(ngModel)]="selectedCourses"
+                            [nzLoading]="isLoading"
+                            [ngModelOptions]="{standalone: true}"
+                        >
+                            <nz-option 
+                                *ngFor="let course of courses" 
+                                [nzLabel]="course.name" 
+                                [nzValue]="course.id"
+                            ></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <button 
+                    nz-button 
+                    class="login-form-button login-form-margin" 
+                    [nzType]="'primary'"
+                    [disabled]="isLoading"
+                    [nzLoading]="isLoading"
+                >
+                    Register
+                </button>
+                
+                <p>Or <a routerLink="/login">login now!</a></p>
             </form>
         </div>
     </div>
