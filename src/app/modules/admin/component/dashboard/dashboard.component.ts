@@ -73,4 +73,32 @@ export class DashboardComponent {
     const endIndex = startIndex + this.pageSize;
     this.paginatedTests = this.filteredTests.slice(startIndex, endIndex);
   }
+
+  // In your dashboard.component.ts
+deleteTest(id: number) {
+  this.testService.deleteTest(id).subscribe(
+    (res) => {
+      this.notification.success(
+        'SUCCESS',
+        'Test deleted successfully!',
+        { nzDuration: 5000 }
+      );
+      this.getAllTests(); // Refresh the list after deletion
+    },
+    (error) => {
+      this.notification.error(
+        'ERROR',
+        'Failed to delete test. Please try again.',
+        { nzDuration: 5000 }
+      );
+    }
+  );
+}
+
+// Add a confirmation dialog before deletion
+confirmDelete(id: number): void {
+  if (confirm('Are you sure you want to delete this test? This action cannot be undone.')) {
+    this.deleteTest(id);
+  }
+}
 }

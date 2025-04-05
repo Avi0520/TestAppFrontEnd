@@ -24,13 +24,14 @@
       </div>
       <div nz-space nzSize="middle">
         <a nz-button nzType="link" routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+        <a nz-button nzType="link" routerLink="/admin/courses" routerLinkActive="active">Courses</a>
         <a nz-button nzType="link" routerLink="/admin/create-test" routerLinkActive="active">Create Test</a>
-        <a nz-button nzType="link" routerLink="/admin/view-test-result" routerLinkActive="active">view Result</a>
+        <a nz-button nzType="link" routerLink="/admin/view-test-result" routerLinkActive="active">View Results</a>
         <a nz-button nzType="link" (click)="logout()">LogOut</a>
       </div>
     </nz-header>
   </nz-layout>
-  </div>
+</div>
 
   <div *ngIf="isUserLoggedIn">
     <nz-layout> 

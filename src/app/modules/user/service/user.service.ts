@@ -16,6 +16,11 @@ export class UserService {
     getAllTest(): Observable<any> {
       return this.http.get(BASIC_URL + `api/test`);
     }
+
+    getTestsByUser(): Observable<any> {
+      const userId = UserStorageService.getUserId();
+      return this.http.get(BASIC_URL + `api/test/byuser/${userId}`);
+    }
     
     getAllQuestion(id:number): Observable<any> {
       return this.http.get(BASIC_URL + `api/test/${id}`);

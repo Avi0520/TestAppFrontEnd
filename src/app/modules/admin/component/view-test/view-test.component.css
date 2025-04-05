@@ -34,3 +34,23 @@
     justify-content: flex-end;
     margin-top: 20px;
   }
+
+  .edit-button {
+    display: flex;
+    gap: 8px; /* Space between buttons */
+  }
+  
+  .btn-danger {
+    background: #ff4d4f;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .btn-danger:hover {
+    background: #ff7875;
+  }
+  
+
+  

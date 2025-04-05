@@ -7,6 +7,7 @@ import { ViewTestComponent } from '../../component/view-test/view-test.component
 import { ViewTestResultComponent } from '../../component/view-test-result/view-test-result.component';
 import { EditTestComponent } from '../../component/edit-test/edit-test.component';
 import { EditQuestionComponent } from '../../component/edit-question/edit-question.component';
+import { CourseComponent } from '../../component/course/course.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,9 @@ const routes: Routes = [
   {path: 'view-test/:id', component: ViewTestComponent},
   {path: 'view-test-result', component: ViewTestResultComponent},
   {path: 'edit-test/:id', component: EditTestComponent },
-  { path: 'edit-question/:testId/:id', component: EditQuestionComponent }
+  { path: 'edit-question/:testId/:id', component: EditQuestionComponent },
+  { path: 'courses', component: CourseComponent }, // Course management
+  { path: 'courses/:id/edit', component: CourseComponent }, // Edit course
  
 ];
 

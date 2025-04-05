@@ -15,6 +15,7 @@
                         <button nz-button nzType="primary" routerLink="/admin/view-test/{{test.id}}">view test</button>
                         <button nz-button nzType="primary" routerLink="/admin/add-question/{{test.id}}">Add Question</button>
                         <button nz-button nzType="primary" routerLink="/admin/edit-test/{{test.id}}">Edit Test</button>
+                        <button nz-button nzType="primary" nzDanger (click)="confirmDelete(test.id)">Delete Test</button>
 
                     </div>
                 </nz-card>
