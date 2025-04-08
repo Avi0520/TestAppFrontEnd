@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'; // Import CommonModule for ngMod
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
 import { SharedModule } from '../../../shared/shared/shared.module';
 import { UserService } from '../../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-my-test-result',
@@ -11,6 +12,8 @@ import { UserService } from '../../service/user.service';
   templateUrl: './view-my-test-result.component.html',
   styleUrl: './view-my-test-result.component.css',
 })
+
+
 export class ViewMyTestResultComponent implements OnInit {
   testResults: any[] = []; // Array to store all test results
   filteredResults: any[] = []; // Array to store filtered test results
@@ -19,7 +22,15 @@ export class ViewMyTestResultComponent implements OnInit {
   currentPage: number = 1; // Current page for pagination
   pageSize: number = 8; // Number of results per page
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+    private router: Router) {}
+
+    viewCorrectness(testResult: any) {
+      // Navigate to correctness component with test ID or data
+      this.router.navigate(['/user/correctness'], { 
+        state: { testData: testResult } 
+      });
+    }
 
   ngOnInit(): void {
     this.loadTestResults();

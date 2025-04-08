@@ -4,15 +4,17 @@ import { DashboardComponent } from '../../component/dashboard/dashboard.componen
 import { TakeTestComponent } from '../../component/take-test/take-test.component';
 import { ViewTestResultsComponent } from '../../component/view-test-results/view-results.component';
 import { ViewMyTestResultComponent } from '../../component/view-my-test-result/view-my-test-result.component';
+import { CorrectnessComponent } from '../../component/correctness/correctness.component';
 
 const routes: Routes = [
   {path: 'dashboard', component:DashboardComponent},
   {path: 'take-test/:id', component:TakeTestComponent},
-  { path: 'view-test-results/:id', component: ViewTestResultsComponent } ,// Route for viewing test results
-  {path : 'view-my-test-result', component:ViewMyTestResultComponent}
+  { path: 'view-test-results/:id', component: ViewTestResultsComponent } ,
+  {path : 'view-my-test-result', component:ViewMyTestResultComponent},
+  { path: 'correctness', component: CorrectnessComponent }
 
 ];
-
+  
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
