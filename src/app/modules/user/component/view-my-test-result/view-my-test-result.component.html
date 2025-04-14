@@ -19,6 +19,7 @@
         <th>Total Questions</th>
         <th>Correct Answers</th>
         <th>Percentage</th>
+        <th>Details</th> <!-- New column header -->
       </tr>
     </thead>
     <tbody>
@@ -27,6 +28,15 @@
         <td>{{ result.totalQuestion }}</td>
         <td>{{ result.correctAnswer }}</td>
         <td>{{ result.percentage }}%</td>
+        <td>
+          <button 
+            nz-button 
+            nzType="primary" 
+            (click)="viewCorrectness(result)"
+          >
+            View Correctness
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
