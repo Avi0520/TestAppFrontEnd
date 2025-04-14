@@ -9,13 +9,12 @@ import { CorrectnessComponent } from '../../component/correctness/correctness.co
 const routes: Routes = [
   {path: 'dashboard', component:DashboardComponent},
   {path: 'take-test/:id', component:TakeTestComponent},
-  { path: 'view-test-results/:id', component: ViewTestResultsComponent } ,// Route for viewing test results
+  { path: 'view-test-results/:id', component: ViewTestResultsComponent } ,
   {path : 'view-my-test-result', component:ViewMyTestResultComponent},
   { path: 'correctness', component: CorrectnessComponent }
 
-
 ];
-
+  
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

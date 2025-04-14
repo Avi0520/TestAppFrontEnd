@@ -26,8 +26,9 @@ export class ViewMyTestResultComponent implements OnInit {
     private router: Router) {}
 
     viewCorrectness(testResult: any) {
-      this.router.navigate(['/user/correctness', testResult.id], {
-        state: { testData: testResult }
+      // Navigate to correctness component with test ID or data
+      this.router.navigate(['/user/correctness'], { 
+        state: { testData: testResult } 
       });
     }
 
